@@ -45,12 +45,12 @@ def main():
     name = get_name(parser, args)
     print(f"Experiment {name}")
 
-    if args.musdb is None and args.rank == 0:
-        print(
-            "You must provide the path to the MusDB dataset with the --musdb flag. "
-            "To download the MusDB dataset, see https://sigsep.github.io/datasets/musdb.html.",
-            file=sys.stderr)
-        sys.exit(1)
+    #if args.musdb is None and args.rank == 0:
+        #print(
+            #"You must provide the path to the MusDB dataset with the --musdb flag. "
+            #"To download the MusDB dataset, see https://sigsep.github.io/datasets/musdb.html.",
+            #file=sys.stderr)
+        #sys.exit(1)
 
     eval_folder = args.evals / name
     eval_folder.mkdir(exist_ok=True, parents=True)
@@ -184,10 +184,10 @@ def main():
     samples = model.valid_length(args.samples)
     print(f"Number of training samples adjusted to {samples}")
     samples = samples + args.data_stride
-    if args.repitch:
-        # We need a bit more audio samples, to account for potential
-        # tempo change.
-        samples = math.ceil(samples / (1 - 0.01 * args.max_tempo))
+    #if args.repitch:
+        ## We need a bit more audio samples, to account for potential
+        ## tempo change.
+        #samples = math.ceil(samples / (1 - 0.01 * args.max_tempo))
 
     args.metadata.mkdir(exist_ok=True, parents=True)
     if args.raw:
@@ -214,11 +214,11 @@ def main():
         train_set, valid_set = get_compressed_datasets(args, samples)
     print("Train set and valid set sizes", len(train_set), len(valid_set))
 
-    if args.repitch:
-        train_set = RepitchedWrapper(
-            train_set,
-            proba=args.repitch,
-            max_tempo=args.max_tempo)
+    #if args.repitch:
+        #train_set = RepitchedWrapper(
+            #train_set,
+            #proba=args.repitch,
+            #max_tempo=args.max_tempo)
 
     best_loss = float("inf")
     for epoch, metrics in enumerate(saved.metrics):
@@ -305,17 +305,17 @@ def main():
     if args.eval_cpu:
         device = "cpu"
         model.to(device)
-    model.eval()
-    evaluate(model, args.musdb, eval_folder,
-             is_wav=args.is_wav,
-             rank=args.rank,
-             world_size=args.world_size,
-             device=device,
-             save=args.save,
-             split=args.split_valid,
-             shifts=args.shifts,
-             overlap=args.overlap,
-             workers=args.eval_workers)
+    #model.eval()
+    #evaluate(model, args.musdb, eval_folder,
+    #         is_wav=args.is_wav,
+    #         rank=args.rank,
+    #         world_size=args.world_size,
+    #         device=device,
+    #         save=args.save,
+    #         split=args.split_valid,
+    #         shifts=args.shifts,
+    #         overlap=args.overlap,
+    #         workers=args.eval_workers)
     model.to("cpu")
     if args.rank == 0:
         if not (args.test or args.test_pretrained):
