@@ -29,6 +29,7 @@ from .train import train_model, validate_model
 from .utils import (human_seconds, load_model, save_model, get_state,
                     save_state, sizeof_fmt, get_quantizer)
 from .wav import get_wav_datasets, get_musdb_wav_datasets
+from .custom_lossfunc import fft_l1loss
 
 
 @dataclass
@@ -175,8 +176,12 @@ def main():
 
     if args.mse:
         criterion = nn.MSELoss()
+    elif args.fftloss:
+        criterion = fft_l1loss
     else:
         criterion = nn.L1Loss()
+
+    print("criterion: ", criterion)
 
     # Setting number of samples so that all convolution windows are full.
     # Prevents hard to debug mistake with the prediction being shifted compared

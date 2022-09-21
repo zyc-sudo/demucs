@@ -97,6 +97,7 @@ def get_parser():
     parser.add_argument("-b", "--batch_size", type=int, default=64)
     parser.add_argument("--lr", type=float, default=3e-4)
     parser.add_argument("--mse", action="store_true", help="Use MSE instead of L1")
+    parser.add_argument("--fftloss", action="store_true", help="Use fftloss instead of L1")
     parser.add_argument("--init", help="Initialize from a pre-trained model.")
 
     # Augmentation options
