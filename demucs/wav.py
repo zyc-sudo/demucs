@@ -59,13 +59,7 @@ def _build_metadata(path, sources):
         if root.name.startswith('.') or folders or root == path:
             continue
         name = str(root.relative_to(path))
-        name_split = name.split("_")
-        hr_num = 0
-        for seg in name_split:
-            if "#" in seg:
-                hr_num = int(seg[1:])
-        if "_large_motion_" not in name and hr_num < 11:
-            meta[name] = _track_metadata(root, sources)
+        meta[name] = _track_metadata(root, sources)
     return meta
 
 
